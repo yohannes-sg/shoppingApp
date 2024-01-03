@@ -21,7 +21,7 @@ steps:
   inputs:
     mavenPomFile: 'Shopping/pom.xml'
     mavenVersionOption: 'Path'
-    mavenPath: '/tmp/apache-maven-3.8.8/bin/mvn'  # Path to the Maven executable in the custom installation
+    mavenPath: '/tmp/apache-maven-3.8.8'  # Update the path to Maven home
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
