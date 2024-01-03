@@ -9,9 +9,18 @@ trigger:
 pool: my-pool
 
 steps:
+# - task: MavenToolInstaller@0
+#   inputs:
+#     mavenVersionOption: 'Custom'
+#     mavenPathOption: 'Custom'
+#     mavenDirectory: '/tmp/apache-maven-3.8.8'  # Specify the path to your Maven 3.8.8 installation
+#     mavenFile: 'apache-maven-3.8.8-bin.tar.gz'  # Provide the name of the Maven archive file if needed
+
 - task: Maven@3
   inputs:
     mavenPomFile: 'Shopping/pom.xml'
+    mavenVersionOption: 'Path'
+    mavenPath: '/tmp/apache-maven-3.8.8/bin/mvn'  # Path to the Maven executable in the custom installation
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
