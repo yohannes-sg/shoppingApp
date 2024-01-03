@@ -1,0 +1,27 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- main
+
+pool: my-pool
+
+steps:
+- script: |
+    export MAVEN_VERSION=3.8.8
+    wget https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz -P /tmp
+    tar -xf /tmp/apache-maven-${MAVEN_VERSION}-bin.tar.gz -C /tmp
+    export M2_HOME=/tmp/apache-maven-${MAVEN_VERSION}
+    export PATH=$M2_HOME/bin:$PATH
+  displayName: 'Install Maven'
+
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'Shopping/pom.xml'
+    mavenVersionOption: 'Path'
+    mavenPath: '/tmp/apache-maven-3.8.8'  # Update the path to Maven home
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
